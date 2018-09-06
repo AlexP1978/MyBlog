@@ -1,0 +1,31 @@
+﻿@model MyBlog3.Models.Article
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Name</title>
+</head>
+<body>
+    <div>
+ @using (Html.BeginForm("Adds", "Home", FormMethod.Post))
+ {
+    <p>Введите название статьи</p>
+    @Html.TextBox("Name", "")
+    <p>Выберите категорию</p>
+    @Html.DropDownList("Category", new MultiSelectList(new string[] { "Обо всем", "IT", "Барахолка", "О высоком" }))
+    <p>Напишите краткое описание статьи</p>
+    @Html.TextArea("ShortBody","", 5, 50, null)
+    <p>Добавьте свою статью</p>
+    @Html.TextArea("FullBody", "", 15, 90, null)
+    <p><br /></p> 
+    <input type="submit" value="Добавить" />
+ }
+    </div>
+</body>
+</html>

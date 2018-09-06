@@ -1,0 +1,45 @@
+﻿@model MyBlog3.Models.IndexViewModel
+@using MyBlog3.Helpers
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Мой блог</title>
+</head>
+<body>
+    <div>
+        <h3>Статьи блога</h3>
+        @foreach (var b in Model.Articles)
+         {
+            <h4>@b.Name</h4>
+                <p>Автор: @b.Author</p>
+                <p>Категория: @b.Category</p>
+                <p>@b.ShortBody</p>
+                <p>@b.DataTxt</p>
+                <p><a href="/Home/More/@b.Id">  подробнее...</a></p>
+                <p></p>
+                if (User.IsInRole("admin") || ( ( User.IsInRole("user") && @b.Author == User.Identity.Name)) )
+                {
+                    <p><a href="/Home/Editing/@b.Id">Редактировать</a>
+                    <a href="/Home/Deleting/@b.Id"> | Удалить</a></p>
+                    <p></p>
+                }
+        }
+        
+    @if ( User.IsInRole("admin") || User.IsInRole("user") )
+    {
+      <p><br /></p>
+      <p><a color="RED" href="/Home/Adds"><h1>Добавить статью</h1></a></p>
+    }
+</div>
+    <br />
+    <div class="btn-group">
+        @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x }))
+    </div>
+</body>
+</html>

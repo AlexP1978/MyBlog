@@ -1,0 +1,42 @@
+﻿@model MyBlog3.Models.Article
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Name</title>
+</head>
+<body>
+    <div> 
+        <form method="post" action="">
+            <input type="hidden" value="@ViewBag.ArticleId" name="ArticleId" />
+            <p>@ViewBag.FullBody</p>
+            <p></p>
+            <p>Комментарии<p />
+              @foreach (var b in ViewBag.Comments)
+              {
+               <p>@b.Comments</p>
+               <p>Автор: @b.Author Data: @b.DataComment</p>
+              }
+
+            @if (User.IsInRole("admin") || User.IsInRole("user"))
+            {
+                @Html.TextArea("Comments", "", 5, 50, null)
+                @*<p><input type="text" name="Comments" /> </p>*@
+                <br />
+                <p></p>
+                <input type="submit" value="Добавить комментарий" />
+            }
+
+        </form>
+
+    </div>
+</body>
+</html>
+
+

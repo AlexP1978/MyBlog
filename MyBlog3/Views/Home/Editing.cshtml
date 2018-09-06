@@ -1,0 +1,45 @@
+﻿@model MyBlog3.Models.Article
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Name</title>
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm("Editing", "Home", FormMethod.Post))
+        {
+            <input type="hidden" value="@ViewBag.ArticleId" name="ArticleId" />
+           string strtxt = ViewBag.Name;
+           <p>Название статьи</p>
+           @Html.TextBox("Name", strtxt == null ? "" : strtxt)
+           <p>Категория</p>
+            if (ViewBag.Category == null)
+            {
+                @Html.DropDownList("Category", new MultiSelectList(new string[] { "Обо всем", "IT", "Барахолка", "О высоком" }))
+            }
+            else
+            {
+                @Html.DropDownList("Category", ViewBag.Category as SelectList, new { id = "category" })
+            }
+           <p>Краткое описание статьи</p>
+           strtxt = ViewBag.ShortBody;
+           @Html.TextArea("ShortBody", strtxt == null ? "" : strtxt , 5, 50, null)
+            <p>Полное описание статьи</p>
+            strtxt = ViewBag.FullBody;
+            @Html.TextArea("FullBody", strtxt == null ? "" : strtxt, 15, 90, null)
+            <br />
+            <p></p>
+            <input type="submit" value="Изменить" />
+        }
+
+
+    </div>
+</body>
+</html>
